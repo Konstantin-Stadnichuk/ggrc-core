@@ -268,6 +268,28 @@ describe('can.Model.Mixin.issueTrackerIntegratable', function () {
           expect(itrShowControls).toEqual(true);
         });
 
+      it('should enable ITR if it is enabled in issue_tracker',
+        () => {
+          let enabled;
+          fakeAssessment.attr('issue_tracker.enabled', true);
+          method.apply(fakeAssessment);
+          // value should have been taken from .issues_tracker.enabled
+          enabled = fakeAssessment.initIssueTrackerObject
+            .calls.mostRecent().args[0].enabled;
+          expect(enabled).toEqual(true);
+        });
+
+      it('should disable ITR if it is disabled in issue_tracker',
+        () => {
+          let enabled;
+          fakeAssessment.attr('issue_tracker.enabled', false);
+          method.apply(fakeAssessment);
+          // value should have been taken from .issues_tracker.enabled
+          enabled = fakeAssessment.initIssueTrackerObject
+            .calls.mostRecent().args[0].enabled;
+          expect(enabled).toEqual(false);
+        });
+
       it('should hide ITR if disabled on instance and in audit',
         () => {
           let itrShowControls;
