@@ -93,7 +93,7 @@ const AUDIT_ISSUE_TRACKER = {
                   obj[key] = function () {
                     let result;
                     result = oldfn.apply(this, arguments);
-                    fn.apply(this, arguments);
+                    fn.call(this, result);
                     return result;
                   };
                   break;
