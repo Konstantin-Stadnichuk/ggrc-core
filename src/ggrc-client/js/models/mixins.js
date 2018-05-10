@@ -338,7 +338,7 @@ const AUDIT_ISSUE_TRACKER = {
         // for newly created instances
         ? (auditItr && auditItr.enabled)
         // for existing instance, the value from the server will be used
-        : null;
+        : (itr && itr.enabled);
 
       let showIssureTrackerControls = this.isNew()
         // for new instance show controls if Issure Tracker enabled for Audit
@@ -385,8 +385,11 @@ const AUDIT_ISSUE_TRACKER = {
         this.issue_tracker._warnings = [];
       }
     },
-    'after:refresh': function () {
-      this.initIssueTracker();
+    'after:refresh': function (dfd) {
+      // wait for a response from the server before initializing issue tracker controls
+      if (dfd) {
+        dfd.done(() => this.initIssueTracker());
+      }
     },
   });
 
